@@ -1,7 +1,3 @@
----
-sidebar_position: 1
----
-
 # ckibana
 
 ## Introduce
@@ -41,13 +37,10 @@ ckibana是一个为了能够在kibana上直接使用ElasticSearch语法查询Cli
 
 - 分段查询: 支持自动拆分查询时间,可以充分利用缓存,提升查询性能
 
-## Who is using
-
-您可以通过在 **[Who is Using ckibana](https://github.com/xxxx)** 登记您的使用情况，分享您的使用经验。
-
 ## Contact
 
-愿意参与构建kibana-proxy或者是需要交流问题可以加入qq群
+愿意参与构建ckibana或者是需要交流问题可以加入qq群
+![](img/readme01.png)
 
 ## License
 

@@ -1,7 +1,3 @@
----
-sidebar_position: 2
----
-
 # usercase
 
 ## 1、访问原生kibana

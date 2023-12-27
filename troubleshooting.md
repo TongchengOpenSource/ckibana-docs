@@ -1,7 +1,3 @@
----
-sidebar_position: 4
----
-
 # troubleshooting
 
 ## 1、CKibana启动成功且没报错，但是访问kibana出现如下错误
