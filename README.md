@@ -40,7 +40,7 @@ ckibana是一个为了能够在kibana上直接使用ElasticSearch语法查询Cli
 ## Contact
 
 愿意参与构建ckibana或者是需要交流问题可以加入qq群
-![](img/readme01.png)
+![](img/readme01.jpg)
 
 ## License
 
