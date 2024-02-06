@@ -45,3 +45,12 @@
 **1）找到对应sql加入CKibana黑名单
 
 **2）调整对应的图表
+
+## 6、用户权限错误
+```java
+ [{"type":"security_exception","reason":"action [indices:data/write/bulk[s]] is unauthorized for user [elastic] with effective roles [superuser] on restricted indices [.kibana_analytics_8.11.3_001], this action is granted by the index privileges [create_doc,create,delete,index,write,all]"},{"type":"security_exception","reason":"action [indices:data/write/bulk[s]] is unauthorized for user [elastic] with effective roles [superuser] on restricted indices [.kibana_analytics_8.11.3_001],
+```
+出现类似错误时，则说明该用户缺少以下权限，可在kibana中添加后解决：
+- `kibana_system`
+- `kibana_admin`
+- `superuser`
