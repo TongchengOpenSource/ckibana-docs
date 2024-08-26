@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocusaurus_docs=self.webpackChunkdocusaurus_docs||[]).push([[9233],{5564:function(s){s.exports=JSON.parse('{"permalink":"/ckibana-docs/zh/blog","page":1,"postsPerPage":2,"totalPages":1,"totalCount":2,"previousPage":null,"nextPage":null,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);

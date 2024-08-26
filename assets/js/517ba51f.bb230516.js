@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocusaurus_docs=self.webpackChunkdocusaurus_docs||[]).push([[3932],{2806:function(a){a.exports=JSON.parse('{"allTagsPath":"/ckibana-docs/zh/blog/tags","slug":"/ckibana-docs/zh/blog/tags/c-kibana","name":"CKibana","count":2,"permalink":"/ckibana-docs/zh/blog/tags/c-kibana"}')}}]);
