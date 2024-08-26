@@ -4,14 +4,14 @@
         <title>𝑪𝑲𝒊𝒃𝒂𝒏𝒂 Blog</title>
         <link>http://CKibana.inf.17usoft.com/docs/ckibana-docs/zh/blog</link>
         <description>𝑪𝑲𝒊𝒃𝒂𝒏𝒂 Blog</description>
-        <lastBuildDate>Mon, 26 Aug 2024 06:52:57 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 26 Aug 2024 08:13:09 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <item>
             <title><![CDATA[如何基于原生Kibana+Clickhouse构建日志平台]]></title>
-            <link>http://CKibana.inf.17usoft.com/docs/ckibana-docs/zh/blog/1</link>
-            <guid>/1</guid>
-            <pubDate>Mon, 26 Aug 2024 06:52:57 GMT</pubDate>
+            <link>http://CKibana.inf.17usoft.com/docs/ckibana-docs/zh/blog/build-logging-platform-with-native-kibana-and-clickhouse</link>
+            <guid>/build-logging-platform-with-native-kibana-and-clickhouse</guid>
+            <pubDate>Mon, 26 Aug 2024 08:13:09 GMT</pubDate>
             <description><![CDATA[如何基于原生Kibana+Clickhouse构建日志平台]]></description>
             <content:encoded><![CDATA[<blockquote><p>本文将介绍如何基于原生Kibana+Clickhouse构建日志平台</p></blockquote><p>业务快速发展过程中对于各种日志数据的查询分析需求会导致日志存储规模急剧增长，传统ELK和以ElasticSearch为核心存储的日志系统随之会面临成本、稳定性以及性能等诸多挑战，业界也看到越来越多的国内外公司将存储切换到ClickHouse，比如携程、快手、B站、Cloudflare和Uber等，从他们的分享中看到收益都很明显，我们的日志系统也开始尝试从ElasticSearch迁移到ClickHouse，并在过程中探索和积累了一套最大程度照顾原有用户使用习惯实现平滑切换的整体方案。</p><h2>1 背景介绍</h2><p>公司内流量最大的通用日志系统底层存储自从2020年由ElasticSearch逐步切换到Clickhouse之后在成本以及稳定性等方面均有显著提升。在今年国庆期间稳定支撑了超过5000亿条/天的日志量，而成本也仅仅是原先ElasticSearch方案的30%。</p><p>除了该日志系统外，公司内还存在很多日志系统，大多基于开源主流ELK方式。在规模越来越大后，成本跟稳定性方面的问题也就逐渐暴露了，所以计划将所有日志系统的底层存储全部切换成ClickHouse。</p><p>关于日志场景下Clickhouse的选型与用法业界已经有很多的公开分享，不作为本文重点，有兴趣可自行搜索下相关资料。</p><p>在存储切换完成之后最重要的是解决查询UI用户体验问题，也看到有公司在把日志存储切到Clickhouse后选择自研一套查询UI，但想要照顾用户原先所有使用习惯从原生Kibana无缝切换到新平台是不太实现的，需要所有业务同事熟悉一套新的语法跟UI交互，无形中给他们加了很大的成本。</p><p>所以，怎么能够让业务用户以零学习成本使用新平台，这是一个最棘手的问题。</p><h2>2 方案介绍</h2><p>我们的思路其实也比较寻常，我们选择在原生Kibana跟ElasticSearch之间新增一层Proxy，该Proxy来做ElasticSearch跟ClickHouse的语法转换，如图:
 <img src="https://oss.17usoft.com/infra-github/ckibana02.png" alt="Untitled"/></p><p>我们自研了一套Proxy（取名CKibana），该Proxy负责将图表请求转换成ClickHouse语法查询到ClickHouse结果后模拟成ElasticSearch响应返回给Kibana，这样就可以直接在原生Kibana上面展示ClickHouse中的数据，除了语法转换，我们还解决了很多实际使用过程中遇到的问题。</p><p><code>CKibana: 现已正式开源，https://github.com/TongchengOpenSource/ckibana</code></p><p>介于ClickHouse的查询并发能力限制，我们保留了ElasticSearch，该ElasticSearch可以用来做结果的缓存等高级特性以及保存Kibana相关的元数据，本身非常轻量。</p><h2>3 CKibana使用</h2><h3>准备环境</h3><ol><li>Kibana: 用来提供给业务做UI展示</li><li>ElasticSearch: 用来做kibana元数据存储+查询缓存等高级特性</li><li>ClickHouse: 真实存日志数据的存储</li><li>CKibana: 提供Proxy等高级功能，实现让用户直接在原生Kibana上查询ClickHouse数据</li></ol><h3>开始使用</h3><h4>启动CKibana</h4><p>配置ElasticSearch相关信息</p><p><img src="https://oss.17usoft.com/infra-github/ckibana03.png" alt="Untitled"/></p><p>启动，需要JDK17+</p><p><code>java -jar ckibana.jar</code></p><h4>修改Kibana</h4><p>修改Kibana配置，将ElasticSearch地址改为CKibana地址</p><p><img src="https://oss.17usoft.com/infra-github/ckibana04.png" alt="Untitled"/></p><p>此时，Kibana功能完全可用，可以将CKibana当成一个ElasticSearch Proxy

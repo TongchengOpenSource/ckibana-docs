@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_docs=self.webpackChunkdocusaurus_docs||[]).push([[568],{9426:function(s){s.exports=JSON.parse('{"title":"All posts","items":[{"title":"How to Build a Logging Platform using Native Kibana and ClickHouse","permalink":"/ckibana-docs/en/blog/build-logging-platform-with-native-kibana-and-clickhouse"}]}')}}]);
