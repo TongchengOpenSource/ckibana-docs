@@ -46,3 +46,13 @@ query.useCache: true
 可见命中cache耗时仅有2ms，没命中的情况下在80毫秒。此配置默认关闭，我们也建议开启此配置。
 利用ES底层作为存储媒介，当然存储成本也会相应的增高，需要您去维护proxy-cache索引的生命周期定期清理冷数据。
 
+## 11、n9e使用
+
+修改默认时间字段
+```
+curl --location --request POST 'localhost:8080/config/updateDefaultTimeField?defaultTimeFieldName=新的时间字段名'
+```
+配置indexPattern
+![](img/usercase11.png)
+配置报警规则
+![](img/usercase11-1.png)

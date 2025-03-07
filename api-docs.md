@@ -94,19 +94,19 @@ CREATE TABLE IF NOT EXISTS ckibana.table_all AS ckibana.table_local ENGINE Distr
 
 #### 参数详解
 
-| 参数名                           | 类型      | 是否必须 | 说明                                                                  |
-|-------------------------------|---------|------|---------------------------------------------------------------------|
-| query.sampleIndexPatterns     | Array   | 否    | 需要开启采样的索引，匹配方式按照前缀匹配，注意如果需要使用采样，则建表语句必须要支持 SAMPLE BY                |
-| query.sampleCountMaxThreshold | Int     | 否    | 开启采样的阈值，一个msearch查询到的数据量超过这个阈值，才会开启采样。说明：当数据量比较大时，此值也需要配置稍大，图表才会更接近 |
-| query.useCache                | Boolean | 否    | 默认关闭，是否启用缓存，将查询结果缓存进ES                                              |
-| proxy.roundAbleMinPeriod      | Long    | 是    | 超过ROUND_ABLE_MIN_PERIOD 支持round.                                    |
-| proxy.maxTimeRange            | Long    | 是    | 过长时间周期，默认1天.                                                        |
-| proxy.blackIndexList          | Array   | 是    | 黑名单列表，按照前缀匹配，配置的索引不会走ck查询，而是直接查询es                                  |
-| proxy.whiteIndexList          | Array   | 是    | 白名单列表，按照前缀匹配，配置的索引会通过ck去查询                                          |
-| proxy.es                      | Object  | 否    | 该业务集群组es集群配置，不配置的话默认走使用metadata-config配置的ES                         |
-| proxy.ck                      | Object  | 是    | 该业务集群组ck集群配置                                                        |
-| proxy.enableMonitoring        | Boolean | 否    | 默认关闭，是否开启查询sql监控                                                    | |
-
+| 参数名                            | 类型      | 是否必须 | 说明                                                                  |
+|--------------------------------|---------|------|---------------------------------------------------------------------|
+| query.sampleIndexPatterns      | Array   | 否    | 需要开启采样的索引，匹配方式按照前缀匹配，注意如果需要使用采样，则建表语句必须要支持 SAMPLE BY                |
+| query.sampleCountMaxThreshold  | Int     | 否    | 开启采样的阈值，一个msearch查询到的数据量超过这个阈值，才会开启采样。说明：当数据量比较大时，此值也需要配置稍大，图表才会更接近 |
+| query.useCache                 | Boolean | 否    | 默认关闭，是否启用缓存，将查询结果缓存进ES                                              |
+| proxy.roundAbleMinPeriod       | Long    | 是    | 超过ROUND_ABLE_MIN_PERIOD 支持round.                                    |
+| proxy.maxTimeRange             | Long    | 是    | 过长时间周期，默认1天.                                                        |
+| proxy.blackIndexList           | Array   | 是    | 黑名单列表，按照前缀匹配，配置的索引不会走ck查询，而是直接查询es                                  |
+| proxy.whiteIndexList           | Array   | 是    | 白名单列表，按照前缀匹配，配置的索引会通过ck去查询                                          |
+| proxy.es                       | Object  | 否    | 该业务集群组es集群配置，不配置的话默认走使用metadata-config配置的ES                         |
+| proxy.ck                       | Object  | 是    | 该业务集群组ck集群配置                                                        |
+| proxy.enableMonitoring         | Boolean | 否    | 默认关闭，是否开启查询sql监控                                                    | |
+| proxy.defaultTimeFieldName     | String  | 否    | 默认为@timestamp。默认时间字段名称，针对非kibana使用，如n9e必须设置对应时间字段名  
 
 更新ES元数据集群配置，ckibana提供如下接口
 
@@ -165,12 +165,17 @@ curl --location --request POST 'localhost:8080/config/updateEnableMonitoring?ena
 curl --location --request POST 'localhost:8080/config/updateMsearchThreadPoolCoreSize?msearchThreadPoolCoreSize=4'
 ```
 
-**12）获取配置接口**
+**12）更新**
+```
+curl --location --request POST 'localhost:8080/config/updateDefaultTimeField?defaultTimeFieldName=新的时间字段名'
+```
+
+**13）获取配置接口**
 ```
 curl --location 'localhost:8080/config/all'
 ```
 
-**13）全量更新配置接口**
+**14）全量更新配置接口**
 ```
 curl --location 'localhost:8080/config/all' \
 --header 'Content-Type: application/json' \
